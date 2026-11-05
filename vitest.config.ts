@@ -8,6 +8,8 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     css: true,
     restoreMocks: true,
+    // Every mock response takes ~500 ms, and the transfer flow chains several.
+    testTimeout: 15_000,
     // Same results on every machine and in CI, whatever the local timezone.
     env: { TZ: 'Asia/Singapore' },
   },
