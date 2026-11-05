@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import { useCustomer } from '../../api/queries'
-import type { Segment } from '../../api/types'
+import { useCustomer } from '@/api/queries'
+import type { Segment } from '@/api/types'
 
 export type Theme = 'light' | 'dark'
 

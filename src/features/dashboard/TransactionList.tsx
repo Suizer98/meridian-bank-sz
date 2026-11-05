@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
-import type { Transaction } from '../../api/types'
+import type { Transaction } from '@/api/types'
 import { Search, X } from 'lucide-react'
-import { formatMoney, formatShortDate } from '../../lib/format'
+import { formatMoney, formatShortDate } from '@/lib/format'
 
 function matchesSearch(transaction: Transaction, term: string): boolean {
   return (

@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
-import { usePayees } from '../../../api/queries'
-import { describedBy, FieldError } from '../../../components/FieldError'
+import { usePayees } from '@/api/queries'
+import { describedBy, FieldError } from '@/components/FieldError'
 import { Search, UserPlus } from 'lucide-react'
-import { Skeleton } from '../../../components/Skeleton'
+import { Skeleton } from '@/components/Skeleton'
 import { StepLayout } from './StepLayout'
-import { recipientSchema, type RecipientValues } from '../schema'
+import { recipientSchema, type RecipientValues } from '@/features/transfer/schema'
 
 const BANKS = ['DBS', 'POSB', 'OCBC', 'UOB', 'Standard Chartered', 'HSBC', 'Maybank', 'Citibank']
 

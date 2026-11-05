@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
-import type { Transfer } from '../../api/types'
+import type { Transfer } from '@/api/types'
 import { Check } from 'lucide-react'
-import { formatMoney } from '../../lib/format'
+import { formatMoney } from '@/lib/format'
 
 interface SuccessPanelProps {
   transfer: Transfer

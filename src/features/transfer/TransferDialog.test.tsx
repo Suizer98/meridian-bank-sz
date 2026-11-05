@@ -1,9 +1,9 @@
 import { screen, within } from '@testing-library/react'
 import userEvent, { type UserEvent } from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
-import { moneyText } from '../../test/money'
-import { renderApp } from '../../test/renderApp'
-import { server } from '../../test/setup'
+import { moneyText } from '@/test/money'
+import { renderApp } from '@/test/renderApp'
+import { server } from '@/test/setup'
 
 const LOAD_TIMEOUT = { timeout: 3000 }
 

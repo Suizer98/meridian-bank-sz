@@ -1,5 +1,5 @@
 import { Plus } from 'lucide-react'
-import { formatMoney } from '../../lib/format'
+import { formatMoney } from '@/lib/format'
 
 interface BalanceHeroProps {
   total: number

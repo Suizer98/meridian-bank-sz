@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import type { Account } from '../../api/types'
-import { formatMoney } from '../../lib/format'
+import type { Account } from '@/api/types'
+import { formatMoney } from '@/lib/format'
 
 export const NOTE_MAX_LENGTH = 50
 

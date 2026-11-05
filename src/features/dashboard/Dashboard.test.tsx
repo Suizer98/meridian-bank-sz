@@ -2,9 +2,9 @@ import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 import { describe, expect, it } from 'vitest'
-import { moneyText } from '../../test/money'
-import { renderApp } from '../../test/renderApp'
-import { server } from '../../test/setup'
+import { moneyText } from '@/test/money'
+import { renderApp } from '@/test/renderApp'
+import { server } from '@/test/setup'
 
 const LOAD_TIMEOUT = { timeout: 3000 }
 

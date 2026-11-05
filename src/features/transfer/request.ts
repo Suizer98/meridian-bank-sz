@@ -1,4 +1,4 @@
-import type { CreateTransferRequest, Payee, TransferRecipient } from '../../api/types'
+import type { CreateTransferRequest, Payee, TransferRecipient } from '@/api/types'
 import type { AmountValues, RecipientValues } from './schema'
 
 export const TRANSFER_FEE = 0

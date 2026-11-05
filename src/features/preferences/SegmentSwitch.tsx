@@ -1,4 +1,4 @@
-import type { Segment } from '../../api/types'
+import type { Segment } from '@/api/types'
 import { usePreferences } from './PreferencesProvider'
 
 const SEGMENTS: Array<{ value: Segment; label: string }> = [

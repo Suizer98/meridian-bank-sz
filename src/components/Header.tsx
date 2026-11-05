@@ -1,6 +1,6 @@
-import { useCustomer } from '../api/queries'
-import { SegmentSwitch } from '../features/preferences/SegmentSwitch'
-import { ThemeToggle } from '../features/preferences/ThemeToggle'
+import { useCustomer } from '@/api/queries'
+import { SegmentSwitch } from '@/features/preferences/SegmentSwitch'
+import { ThemeToggle } from '@/features/preferences/ThemeToggle'
 
 const HOME_URL = import.meta.env.BASE_URL
 const OUT_OF_SCOPE_PAGES = ['Cards', 'Payments', 'Insights']

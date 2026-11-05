@@ -1,10 +1,10 @@
-import { useAccounts, usePayees } from '../../../api/queries'
-import { ApiError } from '../../../api/client'
+import { useAccounts, usePayees } from '@/api/queries'
+import { ApiError } from '@/api/client'
 import { ChevronLeft, Info } from 'lucide-react'
-import { formatMoney } from '../../../lib/format'
+import { formatMoney } from '@/lib/format'
 import { StepLayout } from './StepLayout'
-import { describeRecipient, TRANSFER_FEE } from '../request'
-import type { AmountValues, RecipientValues } from '../schema'
+import { describeRecipient, TRANSFER_FEE } from '@/features/transfer/request'
+import type { AmountValues, RecipientValues } from '@/features/transfer/schema'
 
 const SEND_ERROR = "Something went wrong. Your money hasn't left your account. Try again."
 

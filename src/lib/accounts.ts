@@ -1,4 +1,4 @@
-import type { Account, Customer } from '../api/types'
+import type { Account, Customer } from '@/api/types'
 
 const roundMoney = (amount: number) => Math.round(amount * 100) / 100
 

@@ -1,6 +1,6 @@
-import type { Customer } from '../../api/types'
-import { getRemainingDailyLimit } from '../../lib/accounts'
-import { formatMoney } from '../../lib/format'
+import type { Customer } from '@/api/types'
+import { getRemainingDailyLimit } from '@/lib/accounts'
+import { formatMoney } from '@/lib/format'
 
 export function DailyLimitCard({ customer }: { customer: Customer }) {
   const limit = customer.dailyTransferLimit

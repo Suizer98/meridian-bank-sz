@@ -1,5 +1,5 @@
-import { Skeleton } from '../../components/Skeleton'
-import { RECENT_TRANSACTIONS_LIMIT } from '../../api/queries'
+import { Skeleton } from '@/components/Skeleton'
+import { RECENT_TRANSACTIONS_LIMIT } from '@/api/queries'
 
 const ACCOUNT_PLACEHOLDERS = 3
 
