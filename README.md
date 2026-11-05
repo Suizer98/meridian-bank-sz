@@ -11,7 +11,8 @@ src/
   components/     Shared pieces: Header, Skeleton, FieldError
   features/
     dashboard/    Balance hero, accounts, transactions with search, daily limit, skeleton and error states
-    transfer/     Dialog, stepper, the three steps, success panel, Zod schemas, request builder
+    transfer/     Dialog, stepper, success panel, Zod schemas, request builder
+      substeps/   The three steps (recipient, amount, review) and their shared layout
     preferences/  Theme and segment state, ThemeToggle, SegmentSwitch
   lib/            Pure helpers: formatting (starter), account totals, aria-describedby joiner
   test/           Test setup, render helper, money text helper

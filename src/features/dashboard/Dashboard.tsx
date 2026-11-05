@@ -12,9 +12,12 @@ import { TransactionList } from './TransactionList'
 import './dashboard.css'
 
 export function Dashboard() {
+  // Call all the queries
   const customer = useCustomer()
   const accounts = useAccounts()
   const transactions = useRecentTransactions()
+
+  // Control transfer dialog open off state
   const [isTransferOpen, setTransferOpen] = useState(false)
 
   const queries = [customer, accounts, transactions]
@@ -48,6 +51,7 @@ export function Dashboard() {
   const failed = queries.filter((query) => query.isError)
   const isRetrying = queries.some((query) => query.isFetching)
 
+  // As long as we are not retrying, show the error
   if (failed.length > 0 && !isRetrying) {
     return (
       <DashboardError

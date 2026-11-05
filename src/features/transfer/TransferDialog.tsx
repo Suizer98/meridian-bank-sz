@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useAccounts, useCreateTransfer } from '../../api/queries'
 import { getDepositAccounts } from '../../lib/accounts'
 import { formatMoney } from '../../lib/format'
-import { AmountStep } from './AmountStep'
-import { RecipientStep } from './RecipientStep'
 import { buildTransferRequest } from './request'
-import { ReviewStep } from './ReviewStep'
+import { AmountStep } from './substeps/AmountStep'
+import { RecipientStep } from './substeps/RecipientStep'
+import { ReviewStep } from './substeps/ReviewStep'
 import type { AmountValues, RecipientValues } from './schema'
 import { Stepper, type TransferStep } from './Stepper'
 import { SuccessPanel } from './SuccessPanel'
@@ -23,9 +23,12 @@ const EMPTY_RECIPIENT: RecipientValues = {
 
 export function TransferDialog({ onClose }: { onClose: () => void }) {
   const contentRef = useRef<HTMLDivElement>(null)
+
+  // Refetch accounts and create transfer, instead of passing the data in props
   const accounts = useAccounts()
   const transfer = useCreateTransfer()
 
+  // Local state
   const [step, setStep] = useState<TransferStep>('recipient')
   const [recipient, setRecipient] = useState<RecipientValues>(EMPTY_RECIPIENT)
   const [amount, setAmount] = useState<AmountValues>(() => ({

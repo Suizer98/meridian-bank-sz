@@ -4,6 +4,7 @@ import { PreferencesProvider } from './features/preferences/PreferencesProvider'
 
 export default function App() {
   return (
+    // Contexts provider
     <PreferencesProvider>
       <Header />
       <main className="container page">

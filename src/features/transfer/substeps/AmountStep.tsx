@@ -1,13 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMemo } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
-import { useAccounts, useCustomer } from '../../api/queries'
-import { describedBy, FieldError } from '../../components/FieldError'
+import { useAccounts, useCustomer } from '../../../api/queries'
+import { describedBy, FieldError } from '../../../components/FieldError'
 import { ChevronLeft } from 'lucide-react'
-import { getDepositAccounts, getRemainingDailyLimit } from '../../lib/accounts'
-import { formatMoney } from '../../lib/format'
+import { getDepositAccounts, getRemainingDailyLimit } from '../../../lib/accounts'
+import { formatMoney } from '../../../lib/format'
 import { StepLayout } from './StepLayout'
-import { createAmountSchema, NOTE_MAX_LENGTH, type AmountValues } from './schema'
+import { createAmountSchema, NOTE_MAX_LENGTH, type AmountValues } from '../schema'
 
 const QUICK_AMOUNTS = [50, 100, 250, 500]
 
