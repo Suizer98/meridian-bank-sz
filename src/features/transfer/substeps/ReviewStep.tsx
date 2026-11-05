@@ -37,6 +37,7 @@ export function ReviewStep({
     <StepLayout
       title="Check the details"
       onSubmit={(event) => {
+        // Prevent default form submission which might reload the page
         event.preventDefault()
         if (!isSending) onConfirm()
       }}

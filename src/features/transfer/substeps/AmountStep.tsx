@@ -6,18 +6,21 @@ import { describedBy, FieldError } from '@/components/FieldError'
 import { ChevronLeft } from 'lucide-react'
 import { getDepositAccounts, getRemainingDailyLimit } from '@/lib/accounts'
 import { formatMoney } from '@/lib/format'
-import { StepLayout } from './StepLayout'
+import type { FieldMessages } from '@/features/transfer/request'
 import { createAmountSchema, NOTE_MAX_LENGTH, type AmountValues } from '@/features/transfer/schema'
+import { StepLayout } from './StepLayout'
+import { useServerErrors } from './useServerErrors'
 
 const QUICK_AMOUNTS = [50, 100, 250, 500]
 
 interface AmountStepProps {
   defaultValues: AmountValues
+  serverError?: { message: string; fields: FieldMessages<AmountValues> }
   onBack: (values: AmountValues) => void
   onContinue: (values: AmountValues) => void
 }
 
-export function AmountStep({ defaultValues, onBack, onContinue }: AmountStepProps) {
+export function AmountStep({ defaultValues, serverError, onBack, onContinue }: AmountStepProps) {
   const accounts = useAccounts()
   const customer = useCustomer()
 
@@ -35,6 +38,7 @@ export function AmountStep({ defaultValues, onBack, onContinue }: AmountStepProp
     getValues,
     getFieldState,
     trigger,
+    setError,
     control,
     formState: { errors },
   } = useForm<AmountValues>({
@@ -42,6 +46,7 @@ export function AmountStep({ defaultValues, onBack, onContinue }: AmountStepProp
     defaultValues,
     mode: 'onTouched',
   })
+  useServerErrors(setError, serverError?.fields)
   const fromAccountId = useWatch({ control, name: 'fromAccountId' })
   const note = useWatch({ control, name: 'note' })
   const selectedAccount = depositAccounts.find((account) => account.id === fromAccountId)
@@ -49,6 +54,7 @@ export function AmountStep({ defaultValues, onBack, onContinue }: AmountStepProp
   return (
     <StepLayout
       title="How much?"
+      alert={serverError?.message}
       onSubmit={handleSubmit(onContinue)}
       footer={
         <>

@@ -12,9 +12,9 @@ src/
   features/
     dashboard/    Balance hero, accounts, transactions with search, daily limit, skeleton and error states
     transfer/     Dialog, stepper, success panel, Zod schemas, request builder
-      substeps/   The three steps (recipient, amount, review) and their shared layout
+      substeps/   The three steps (recipient, amount, review), their shared layout and server-error hook
     preferences/  Theme and segment state, ThemeToggle, SegmentSwitch
-  lib/            Pure helpers: formatting (starter), account totals, aria-describedby joiner
+  lib/            Pure helpers: formatting (starter), account totals
   test/           Test setup, render helper, money text helper
   index.css       Global layout, buttons and the few app-level variables not in the tokens
 ```
@@ -50,8 +50,11 @@ Forms and validation
   limit messages show live figures and the same schema drives inline errors and
   `Continue`.
 - Fields validate on blur and on `Continue`; on `Continue` focus moves to the
-  first invalid field. Server field errors are shown in the alert if the API
-  still rejects a request.
+  first invalid field.
+- If the API still rejects a request with field errors (for example the
+  balance changed in between), the dialog goes back to the step that owns the
+  field, shows `fields.*` under the field and `message` in a `role="alert"`
+  banner, and focuses the first invalid field.
 
 Theming
 
@@ -78,6 +81,8 @@ Other choices
   then Retail.
 - Cards, Payments and Insights are rendered as disabled links, as the brief
   asks.
+- Imports use an `@/` alias for `src/` (set in `tsconfig.json`, `vite.config.ts`
+  and `vitest.config.ts`). Same-folder imports stay relative.
 
 What I'd change with more time: the `Discard this transfer?` prompt, and a
 shared field component to reduce repeated label/input/error markup.
@@ -105,6 +110,8 @@ those parameters requests are unchanged.
 - Transfer: a successful transfer shows `Sending…`, the success screen with a
   reference, and the dashboard shows the new total, transaction and limit.
 - Transfer: a failed send stays on review with the alert and the note intact.
+- Transfer: a 422 with `fields.amount` returns to the amount step with the
+  message under the field, the banner, and focus on the field.
 - `format.ts`: the starter money and date formatting.
 
 Tests render the whole app against the MSW handlers and use roles and visible
@@ -130,6 +137,10 @@ Places where I changed, rejected or fixed what it produced:
 - Styling: I rejected recolouring the app to another bank's palette and pushed
   remaining hard-coded values (widths, letter spacing, opacity, `transparent`)
   either onto tokens or into the single app-level variable block.
+- Imports: it wrote relative paths like `../../../api/queries`. Those break
+  whenever a component moves to another folder, which happened when I grouped
+  the transfer steps into `substeps/`. I added the `@/` alias so imports stay
+  the same wherever a file lives.
 
 ## Not done / known issues
 

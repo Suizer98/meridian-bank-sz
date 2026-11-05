@@ -1,5 +1,6 @@
 import { screen, within } from '@testing-library/react'
 import userEvent, { type UserEvent } from '@testing-library/user-event'
+import { http, HttpResponse } from 'msw'
 import { describe, expect, it } from 'vitest'
 import { moneyText } from '@/test/money'
 import { renderApp } from '@/test/renderApp'
@@ -86,5 +87,40 @@ describe('transfer', () => {
     expect(within(dialog).getByRole('heading', { name: 'Check the details' })).toBeInTheDocument()
     expect(within(dialog).getByRole('button', { name: 'Confirm transfer' })).toBeEnabled()
     expect(within(dialog).getByText('Dinner #fail')).toBeInTheDocument()
+  })
+
+  it('shows API field errors under the field when the server rejects a transfer', async () => {
+    const fieldMessage = `Amount can't be more than your available balance (${moneyText(4280.55)}).`
+    server.use(
+      http.post(
+        '*/api/transfers',
+        () =>
+          HttpResponse.json(
+            {
+              error: {
+                code: 'INSUFFICIENT_FUNDS',
+                message: 'Amount exceeds available balance.',
+                fields: { amount: fieldMessage },
+              },
+            },
+            { status: 422 },
+          ),
+        { once: true },
+      ),
+    )
+    const user = userEvent.setup()
+    renderApp()
+    const dialog = await openTransferToJamie(user)
+
+    await user.type(within(dialog).getByLabelText('Amount'), '120')
+    await user.click(within(dialog).getByRole('button', { name: 'Continue' }))
+    await user.click(within(dialog).getByRole('button', { name: 'Confirm transfer' }))
+
+    expect(
+      await within(dialog).findByRole('heading', { name: 'How much?' }, LOAD_TIMEOUT),
+    ).toBeInTheDocument()
+    expect(within(dialog).getByRole('alert')).toHaveTextContent('Amount exceeds available balance.')
+    expect(await within(dialog).findByText(fieldMessage)).toBeInTheDocument()
+    expect(within(dialog).getByLabelText('Amount')).toHaveFocus()
   })
 })

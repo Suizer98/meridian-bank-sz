@@ -5,24 +5,33 @@ import { usePayees } from '@/api/queries'
 import { describedBy, FieldError } from '@/components/FieldError'
 import { Search, UserPlus } from 'lucide-react'
 import { Skeleton } from '@/components/Skeleton'
-import { StepLayout } from './StepLayout'
+import type { FieldMessages } from '@/features/transfer/request'
 import { recipientSchema, type RecipientValues } from '@/features/transfer/schema'
+import { StepLayout } from './StepLayout'
+import { useServerErrors } from './useServerErrors'
 
 const BANKS = ['DBS', 'POSB', 'OCBC', 'UOB', 'Standard Chartered', 'HSBC', 'Maybank', 'Citibank']
 
 interface RecipientStepProps {
   defaultValues: RecipientValues
+  serverError?: { message: string; fields: FieldMessages<RecipientValues> }
   onCancel: () => void
   onContinue: (values: RecipientValues) => void
 }
 
-export function RecipientStep({ defaultValues, onCancel, onContinue }: RecipientStepProps) {
+export function RecipientStep({
+  defaultValues,
+  serverError,
+  onCancel,
+  onContinue,
+}: RecipientStepProps) {
   const payees = usePayees()
   const [search, setSearch] = useState('')
   const {
     register,
     handleSubmit,
     setValue,
+    setError,
     control,
     formState: { errors },
   } = useForm<RecipientValues>({
@@ -30,6 +39,7 @@ export function RecipientStep({ defaultValues, onCancel, onContinue }: Recipient
     defaultValues,
     mode: 'onTouched',
   })
+  useServerErrors(setError, serverError?.fields)
   const mode = useWatch({ control, name: 'mode' })
 
   const term = search.trim().toLowerCase()
@@ -50,6 +60,7 @@ export function RecipientStep({ defaultValues, onCancel, onContinue }: Recipient
   return (
     <StepLayout
       title="Who are you sending to?"
+      alert={serverError?.message}
       onSubmit={handleSubmit(onContinue)}
       footer={
         <>

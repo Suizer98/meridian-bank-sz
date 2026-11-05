@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useAccounts, useCreateTransfer } from '@/api/queries'
 import { getDepositAccounts } from '@/lib/accounts'
 import { formatMoney } from '@/lib/format'
-import { buildTransferRequest } from './request'
+import { buildTransferRequest, getServerError, type ServerError } from './request'
 import { AmountStep } from './substeps/AmountStep'
 import { RecipientStep } from './substeps/RecipientStep'
 import { ReviewStep } from './substeps/ReviewStep'
@@ -36,14 +36,34 @@ export function TransferDialog({ onClose }: { onClose: () => void }) {
     amount: '',
     note: '',
   }))
+  const [serverError, setServerError] = useState<ServerError | null>(null)
 
   function focusStepHeading() {
     contentRef.current?.querySelector<HTMLElement>('[data-step-heading]')?.focus()
   }
 
+  // With a server error the step focuses the invalid field instead.
   useEffect(() => {
-    if (!transfer.isSuccess) focusStepHeading()
-  }, [step, transfer.isSuccess])
+    if (!transfer.isSuccess && !serverError) focusStepHeading()
+  }, [step, transfer.isSuccess, serverError])
+
+  function goTo(next: TransferStep) {
+    setServerError(null)
+    setStep(next)
+  }
+
+  function send() {
+    // Tell the mutation trigger to run
+    transfer.mutate(buildTransferRequest(recipient, amount), {
+      onError: (error) => {
+        const fieldError = getServerError(error)
+        if (!fieldError) return
+        transfer.reset()
+        setServerError(fieldError)
+        setStep(fieldError.step)
+      },
+    })
+  }
 
   const sent = transfer.data?.transfer
 
@@ -82,10 +102,11 @@ export function TransferDialog({ onClose }: { onClose: () => void }) {
               {step === 'recipient' && (
                 <RecipientStep
                   defaultValues={recipient}
+                  serverError={serverError?.step === 'recipient' ? serverError : undefined}
                   onCancel={onClose}
                   onContinue={(values) => {
                     setRecipient(values)
-                    setStep('amount')
+                    goTo('amount')
                   }}
                 />
               )}
@@ -93,13 +114,14 @@ export function TransferDialog({ onClose }: { onClose: () => void }) {
               {step === 'amount' && (
                 <AmountStep
                   defaultValues={amount}
+                  serverError={serverError?.step === 'amount' ? serverError : undefined}
                   onBack={(values) => {
                     setAmount(values)
-                    setStep('recipient')
+                    goTo('recipient')
                   }}
                   onContinue={(values) => {
                     setAmount(values)
-                    setStep('review')
+                    goTo('review')
                   }}
                 />
               )}
@@ -114,7 +136,7 @@ export function TransferDialog({ onClose }: { onClose: () => void }) {
                     transfer.reset()
                     setStep('amount')
                   }}
-                  onConfirm={() => transfer.mutate(buildTransferRequest(recipient, amount))}
+                  onConfirm={send}
                 />
               )}
             </>

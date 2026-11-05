@@ -84,13 +84,7 @@
 }
 
 .new-transfer-button {
-  background: var(--on-hero);
-  color: var(--hero-from);
   box-shadow: var(--shadow-sm);
-}
-
-.new-transfer-button:hover {
-  box-shadow: var(--shadow-lg);
 }
 
 @media (min-width: 640px) {
@@ -108,13 +102,7 @@
     bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
     left: var(--gutter-mobile);
     z-index: var(--z-header);
-    background: var(--brand);
-    color: var(--on-brand);
     box-shadow: var(--shadow-lg);
-  }
-
-  .new-transfer-button:hover {
-    background: var(--brand-hover);
   }
 
   .page {

@@ -75,10 +75,6 @@ textarea {
   outline-offset: 2px;
 }
 
-[tabindex='-1']:focus {
-  outline: none;
-}
-
 .amount {
   font-variant-numeric: tabular-nums;
 }

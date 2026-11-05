@@ -20,7 +20,7 @@ export function BalanceHero({ total, depositAccountCount, onNewTransfer }: Balan
           {depositAccountCount === 1 ? 'account' : 'accounts'}
         </p>
       </div>
-      <button type="button" className="button new-transfer-button" onClick={onNewTransfer}>
+      <button type="button" className="button button-primary new-transfer-button" onClick={onNewTransfer}>
         <Plus size={20} aria-hidden="true" />
         New transfer
       </button>
