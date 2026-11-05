@@ -1,6 +1,6 @@
 # Meridian Banking — Sui Zer
 
-- Deployed: <url>
+- Deployed: https://meridian-bank-sz.vercel.app/
 - Run locally: `npm install && npm run dev`
 
 ## Project structure
