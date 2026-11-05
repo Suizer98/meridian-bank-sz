@@ -14,7 +14,7 @@ describe('dashboard', () => {
 
     expect(await screen.findByText(moneyText(17120.55), {}, LOAD_TIMEOUT)).toBeInTheDocument()
     expect(screen.getByText('Across 2 deposit accounts')).toBeInTheDocument()
-    expect(screen.getByText(moneyText(-420.3))).toBeInTheDocument()
+    expect(screen.getByText('SGD -420.3')).toBeInTheDocument()
   })
 
   it('shows an error when loading fails and loads the dashboard on Retry', async () => {
