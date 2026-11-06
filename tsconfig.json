@@ -19,10 +19,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-    "types": ["vite/client"],
-    "paths": { "@/*": ["./src/*"] }
+    "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "vite.config.ts", "vitest.config.ts"],
-  "exclude": ["node_modules", "dist"]
+  "files": []
 }

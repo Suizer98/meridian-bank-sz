@@ -1,0 +1,10 @@
+{
+  "name": "@meridian/accounts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc -p tsconfig.json"
+  }
+}

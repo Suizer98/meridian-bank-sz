@@ -3,17 +3,21 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "dev:shell": "npm run dev -w @meridian/shell",
+    "dev:accounts": "npm run dev -w @meridian/accounts",
+    "dev:payments": "npm run dev -w @meridian/payments",
+    "build": "npm run build -w @meridian/accounts && npm run build -w @meridian/payments && npm run build -w @meridian/shell",
     "lint": "eslint .",
-    "typecheck": "tsc",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test -w @meridian/shared && npm run test -w @meridian/shell",
     "check": "npm run lint && npm run typecheck && npm test",
     "mock": "node mock-api/server.mjs"
   },
@@ -29,6 +33,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
+    "@module-federation/vite": "^1.23.10",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.8",
@@ -47,7 +52,7 @@
   },
   "msw": {
     "workerDirectory": [
-      "public"
+      "apps/shell/public"
     ]
   }
 }
